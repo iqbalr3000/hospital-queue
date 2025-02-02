@@ -5,8 +5,10 @@ $hospitalSystem = new HospitalQueueSystem();
 
 // Menangani input pasien
 if (isset($_POST['add_patient']) && !empty($_POST['patient_name'])) {
+    $randomNumber = rand(100, 999);
     $patientName = htmlspecialchars($_POST['patient_name']);
-    $hospitalSystem->addPatient($patientName);
+
+    $hospitalSystem->addPatient(sprintf('%d - %s', $randomNumber, $patientName));
 }
 
 // Menangani layanan pasien
