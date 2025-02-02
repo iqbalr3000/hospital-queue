@@ -52,7 +52,6 @@ $history = $hospitalSystem->getHistory();
                     </tr>
                 <?php endif; ?>
             </tbody>
-
         </table>
     </div>
 
