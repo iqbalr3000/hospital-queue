@@ -14,6 +14,11 @@ if (isset($_POST['serve_patient'])) {
     $hospitalSystem->servePatient();
     $hospitalSystem->saveToHistory($hospitalSystem->getQueue());
 }
+
+// Menangani pindah pasien
+if (isset($_POST['move_patient'])) {
+    $hospitalSystem->movePatientBack();
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +34,7 @@ if (isset($_POST['serve_patient'])) {
 <body>
     <header>
         <nav class="navbar container">
-            <div class="logo">🏥 Hospital Queue</div>
+            <div class="logo">🏥 Klinik Queue</div>
             <ul class="nav-links">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="history.php">History</a></li>
@@ -83,6 +88,10 @@ if (isset($_POST['serve_patient'])) {
 
         <div class="action-buttons">
             <form method="POST" action="">
+                <button type="submit" name="move_patient" class="btn-secondary"
+                    <?php echo ($queue->isEmpty() || count($_SESSION['queue']) < 2) ? 'disabled' : ''; ?>>
+                    ↩
+                </button>
                 <button type="submit" name="serve_patient" class="btn-success" <?php echo ($queue->isEmpty()) ? 'disabled' : ''; ?>>Layani Pasien</button>
             </form>
         </div>

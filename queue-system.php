@@ -58,6 +58,17 @@ class Queue
             echo "</ul>";
         }
     }
+
+    // Memindahkan pasien ke 3 antrian lebih belakang
+    public function moveQueue()
+    {
+        if (!empty($this->queue)) {
+            $patient = array_shift($this->queue);
+            $position = min(3, count($this->queue));
+            array_splice($this->queue, $position, 0, [$patient]);
+            $_SESSION['queue'] = $this->queue;
+        }
+    }
 }
 
 // Class untuk mengelola sistem antrian rumah sakit
@@ -89,13 +100,19 @@ class HospitalQueueSystem
         return null;
     }
 
-
     // Fungsi untuk menampilkan daftar pasien dalam antrian
     public function viewQueue()
     {
         $this->queue->displayQueue();
     }
 
+    // Fungsi untuk memindahkan antrian pasien
+    public function movePatientBack()
+    {
+        $this->queue->moveQueue();
+    }
+
+    // Fungsi untuk menyimpan log history pasien yang di layani
     public function saveToHistory($name)
     {
         if (is_string($name) && !empty(trim($name))) {
@@ -108,6 +125,7 @@ class HospitalQueueSystem
         }
     }
 
+    // Fungsi untuk mengambil log history pasien yang di layani
     public function getHistory()
     {
         if (file_exists($this->historyFile)) {
